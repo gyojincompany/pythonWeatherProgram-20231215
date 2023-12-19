@@ -7,7 +7,7 @@ import requests
 
 from bs4 import BeautifulSoup
 
-weather_html = requests.get("https://search.naver.com/search.naver?query=한남동+날씨")
+weather_html = requests.get("https://search.naver.com/search.naver?query=도쿄+날씨")
 print(weather_html.text)
 
 weather_soup = BeautifulSoup(weather_html.text, 'html.parser')
@@ -48,9 +48,10 @@ except:#외국도시 날씨 검색의 경우 미세먼지 정보에서 에러가
         weather_area = weather_soup.find('h2', {'class': 'title'}).text
         print(weather_area)
 
-        now_temperature = weather_soup.find('div', {'class': 'temperature_text'}).text
-        now_temperature = now_temperature[6:10].strip()
-        print(now_temperature)
+        # now_temperature = weather_soup.find('div', {'class': 'temperature_text'}).text
+        now_temperature = weather_soup.select('div.temperature_text>span')
+        # now_temperature = now_temperature[6:].strip()
+        print(f"now_temperature")
 
         # 외국도시의 경우 현재 날씨(ex 흐림, 맑음)
         today_weather_text = weather_soup.find('p', {'class': 'summary'}).text

@@ -62,7 +62,8 @@ class WeatherWindow(QMainWindow, form_class):
             #print(dust2)
 
             self.area_label.setText(weather_area)  # 날씨 조회 지역 출력
-            self.weather_image.setText(today_weather)  # 오늘 날씨 텍스트 출력
+            # self.weather_image.setText(today_weather)  # 오늘 날씨 텍스트 출력
+            self.setWeatherImage(today_weather)  # 날씨 이미지 출력 함수 호출
             self.temper_label.setText(now_temperature)  # 현재온도 출력
             self.yesterday_label.setText(yesterday_temper)  # 어제와의 날씨 비교 텍스트 출력
             self.sensetemper_label.setText(sense_temper)  # 체감온도 출력
@@ -75,13 +76,13 @@ class WeatherWindow(QMainWindow, form_class):
                 #print(weather_area)
 
                 now_temperature = weather_soup.find('div', {'class': 'temperature_text'}).text
-                now_temperature = now_temperature[6:10].strip()
+                now_temperature = now_temperature[6:8].strip()
                 #print(now_temperature)
 
                 # 외국도시의 경우 현재 날씨(ex 흐림, 맑음)
                 today_weather_text = weather_soup.find('p', {'class': 'summary'}).text
                 #print(today_weather_text)
-                today_weather = today_weather_text[:2]
+                today_weather = today_weather_text[:2].strip()
                 #print(today_weather)
 
                 # 체감온도
@@ -89,13 +90,53 @@ class WeatherWindow(QMainWindow, form_class):
                 #print(sense_temper)
 
                 # 외국도시는 미세먼지 정보 없음
-                yesterday_temper = "어제 날씨 비교정보 없음"
+                yesterday_temper = ""
                 dust1 = "-"
                 dust2 = "-"
 
+                self.area_label.setText(weather_area)  # 날씨 조회 지역 출력
+                # self.weather_image.setText(today_weather)  # 오늘 날씨 텍스트 출력
+                self.setWeatherImage(today_weather)  # 날씨 이미지 출력 함수 호출
+                self.temper_label.setText(now_temperature)  # 현재온도 출력
+                self.yesterday_label.setText(yesterday_temper)  # 어제와의 날씨 비교 텍스트 출력
+                self.sensetemper_label.setText(sense_temper)  # 체감온도 출력
+                self.dust01_info.setText(dust1)  # 미세먼지 정보 출력
+                self.dust02_info.setText(dust2)  # 초미세먼지 정보 출력
+
+
             except:
-                weather_area = "입력된 지역명 오류"
+                weather_area = "지역명 오류"
                 # print("해당 지역의 날씨정보가 검색되지 않습니다.")
+                self.area_label.setText(weather_area)  # 날씨 조회 지역 출력
+                self.weather_image.setText("")  # 오늘 날씨 텍스트 출력
+                self.temper_label.setText("")  # 현재온도 출력
+                self.yesterday_label.setText("지역명을 다시 입력하세요.")  # 어제와의 날씨 비교 텍스트 출력
+                self.sensetemper_label.setText("")  # 체감온도 출력
+                self.dust01_info.setText("")  # 미세먼지 정보 출력
+                self.dust02_info.setText("")  # 초미세먼지 정보 출력
+
+    def setWeatherImage(self, weatherText):
+        if weatherText == "맑음":
+            weatherImg = QPixmap("img/sun.png")  # 맑음 이미지 불러오기
+            self.weather_image.setPixmap(QPixmap(weatherImg))  # 해당 레이블 자리에 이미지가 출력
+        elif weatherText == "흐림":
+            weatherImg = QPixmap("img/cloud.png")  # 맑음 이미지 불러오기
+            self.weather_image.setPixmap(QPixmap(weatherImg))  # 해당 레이블 자리에 이미지가 출력
+        elif weatherText == "눈":
+            weatherImg = QPixmap("img/snow.png")  # 맑음 이미지 불러오기
+            self.weather_image.setPixmap(QPixmap(weatherImg))  # 해당 레이블 자리에 이미지가 출력
+        elif weatherText == "비":
+            weatherImg = QPixmap("img/rain.png")  # 맑음 이미지 불러오기
+            self.weather_image.setPixmap(QPixmap(weatherImg))  # 해당 레이블 자리에 이미지가 출력
+        elif weatherText == "소낙":
+            weatherImg = QPixmap("img/rain.png")  # 맑음 이미지 불러오기
+            self.weather_image.setPixmap(QPixmap(weatherImg))  # 해당 레이블 자리에 이미지가 출력
+        elif weatherText == "구름많음":
+            weatherImg = QPixmap("img/cloud.png")  # 맑음 이미지 불러오기
+            self.weather_image.setPixmap(QPixmap(weatherImg))  # 해당 레이블 자리에 이미지가 출력
+        else:
+            self.weather_image.setText(weatherText)
+
 
 
 
