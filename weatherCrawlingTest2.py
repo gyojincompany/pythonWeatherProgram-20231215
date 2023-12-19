@@ -7,7 +7,7 @@ import requests
 
 from bs4 import BeautifulSoup
 
-weather_html = requests.get("https://search.naver.com/search.naver?query=fdfasff+날씨")
+weather_html = requests.get("https://search.naver.com/search.naver?query=도쿄+날씨")
 print(weather_html.text)
 
 weather_soup = BeautifulSoup(weather_html.text, 'html.parser')
