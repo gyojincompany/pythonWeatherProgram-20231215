@@ -143,7 +143,7 @@ class WeatherWindow(QMainWindow, form_class):
 
     def reflashTimer(self):
         self.request_weather()  # 날씨 조회 함수 호출
-        threading.Timer(30, self.reflashTimer).start()
+        threading.Timer(600, self.reflashTimer).start()
         print("타이머 호출 확인")
 
 
