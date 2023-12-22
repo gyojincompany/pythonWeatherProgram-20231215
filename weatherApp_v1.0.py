@@ -26,6 +26,9 @@ class WeatherWindow(QMainWindow, form_class):
 
         self.weather_btn.clicked.connect(self.request_weather)  # 날씨조회 버튼 클릭->함수 연결
         self.weather_btn.clicked.connect(self.reflashTimer)  # 날씨조회 버튼 클릭->함수 연결
+        self.input_area.returnPressed.connect(self.request_weather)  # 엔터키누르면 함수 연결
+        self.input_area.returnPressed.connect(self.reflashTimer)  # 엔터키누르면 함수 연결
+
 
     def request_weather(self):
         weather_area = self.input_area.text()  # 프로그램 내 날씨입력창에서 입력된 지역이름 가져오기
